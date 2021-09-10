@@ -1,16 +1,10 @@
-import Button from './components/Button';
-
-function HelloWolrd(){
-  return(
-    <Button>Teste</Button>
-  )
-}
+import Header from "./components/headerAdmin";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-          < HelloWolrd />
+          < Header />
       </header>
     </div>
   );
