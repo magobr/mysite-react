@@ -1,0 +1,25 @@
+.input-btn{
+    margin-top: 3px;
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.btn-blue{
+    background-color: #0984e3;
+    border: solid 0.5px #74b9ff;
+    color: #ffffff;
+}
+.btn-blue:hover{
+    background-color:#74b9ff;
+    transition: 0.5s;
+}
+
+.btn-green{
+    background-color: #04AA6D;
+    border: solid 0.5px #00b894;
+    color: #ffffff;
+}
+.btn-green:hover{
+    background-color:#00b894;
+    transition: 0.5s;
+}
