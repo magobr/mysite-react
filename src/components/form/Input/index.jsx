@@ -23,11 +23,12 @@ export default class FormInput extends React.Component {
                     <label htmlFor={this.props.id}>{this.props.label}</label>
                 </div>
                 <input 
-                    type="text"
+                    type={this.props.type}
                     id={this.props.id}
                     name={this.props.nameItem}
                     value={this.state.valueInput}
                     onInput={(e) => this.inputUpdated(e)}
+                    placeholder={this.props.placeholder}
                 />
             </div>
         )
