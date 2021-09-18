@@ -4,12 +4,14 @@ import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import './index.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import NewUser from './pages/NewUser'
 
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
       <Route path="/" exact={true} component={Home} />
       <Route path="/login" component={Login} />
+      <Route path="/admin/user/new" component={NewUser} />
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')

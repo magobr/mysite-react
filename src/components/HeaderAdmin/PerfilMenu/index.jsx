@@ -17,10 +17,12 @@ export default class PerfilMenu extends React.Component{
 
     render(){
         return(
-            <div class="dropdown">
-                <button onClick={this.onClickMenu} class="dropbtn"><ion-icon name="chevron-down-outline" class="dropbtn"></ion-icon></button>
+            <div className="dropdown">
+                <button onClick={this.onClickMenu} className="dropbtn">
+                    <ion-icon name="chevron-down-outline" className="dropbtn"></ion-icon>
+                </button>
                 {this.state.isMenuVisible && 
-                    <div id="myDropdown" class="dropdown-content show">
+                    <div id="myDropdown" className="dropdown-content show">
                         <a href="#home">Home</a>
                         <a href="#about">About</a>
                         <a href="#contact">Contact</a>
