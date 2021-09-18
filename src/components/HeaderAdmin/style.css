@@ -1,9 +1,6 @@
 header{
     width: 100%;
-}
-
-.container{
-    background-color: #dfe6e9;
+    border-bottom: solid .2px rgba(0,0,0,0.2);
 }
 
 .table-title{
@@ -22,6 +19,7 @@ header{
     flex-direction: row;
     padding: 15px;
 }
+
 .img-perfil{
     background-color: #0984e3;
     border: solid 5px #0984e3;
