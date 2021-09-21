@@ -9,9 +9,15 @@ import NewUser from './pages/NewUser'
 ReactDOM.render(
   <BrowserRouter>
     <Switch>
-      <Route path="/" exact={true} component={Home} />
-      <Route path="/login" component={Login} />
-      <Route path="/admin/user/new" component={NewUser} />
+      <Route path="/" exact={true} component={Home} >
+        <Route path='*' component="" />
+      </Route>
+      <Route path="/admin">
+        <Route path="login" component={Login} />
+        <Route path="/users" component={NewUser} />
+        <Route path="/users/new" component={NewUser} />
+      </Route>
+      
     </Switch>
   </BrowserRouter>,
   document.getElementById('root')

@@ -15,9 +15,14 @@ header{
 .top-container{
     display: flex;
     align-items: center;
-    justify-content: start;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    -webkit-box-align: start;
+    -ms-flex-align: start;
     flex-direction: row;
     padding: 15px;
+    box-shadow: 0 0 5px 0 rgba(210, 210, 210, 0.5);
 }
 
 .img-perfil{

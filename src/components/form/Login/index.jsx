@@ -8,7 +8,7 @@ export default class FromLogin extends React.Component{
     render(){
         return(
             <div className="container">
-                <div class="form">
+                <div className="form">
                     <form>
                         <FormInput
                             id="email"
