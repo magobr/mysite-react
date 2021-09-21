@@ -1,6 +1,5 @@
 import React from "react";
 
-import HeaderAdmin from "../../HeaderAdmin";
 import FormButton from "../Button";
 import FormInput from "../Input";
 import FormSelect from "../Select";
@@ -18,7 +17,6 @@ export default class CreateUser extends React.Component{
         console.log(mockUserType.Admin)
         return(
             <>
-                <HeaderAdmin />
                 <div className="container">
                     <div className="form">
                         <form>
