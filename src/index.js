@@ -5,6 +5,7 @@ import './index.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import AdminPage from './pages/AdminPage'
+import notFound from './pages/404';
 
 ReactDOM.render(
   <Router>
@@ -13,6 +14,7 @@ ReactDOM.render(
       <Route path="/login" component={Login} />
       <Route path="/admin/user" exact component={AdminPage} />
       <Route path="/admin/user/new" component={AdminPage} />
+      <Route path="*" component={notFound} />
     </Switch>
   </Router>,
   document.getElementById('root')
