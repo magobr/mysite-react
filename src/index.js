@@ -1,25 +1,20 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './index.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
-import NewUser from './pages/NewUser'
+import AdminPage from './pages/AdminPage'
 
 ReactDOM.render(
-  <BrowserRouter>
+  <Router>
     <Switch>
-      <Route path="/" exact={true} component={Home} >
-        <Route path='*' component="" />
-      </Route>
-      <Route path="/admin">
-        <Route path="login" component={Login} />
-        <Route path="/users" component={NewUser} />
-        <Route path="/users/new" component={NewUser} />
-      </Route>
-      
+      <Route path="/" exact={true} component={Home} />
+      <Route path="/login" component={Login} />
+      <Route path="/admin/user" exact component={AdminPage} />
+      <Route path="/admin/user/new" component={AdminPage} />
     </Switch>
-  </BrowserRouter>,
+  </Router>,
   document.getElementById('root')
 );
 
