@@ -29,6 +29,7 @@ export default class FormInput extends React.Component {
                     value={this.state.valueInput}
                     onInput={(e) => this.inputUpdated(e)}
                     placeholder={this.props.placeholder}
+                    onChange={this.props.nameTarget}
                 />
             </div>
         )
