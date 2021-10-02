@@ -13,7 +13,11 @@ export default class FromLogin extends React.Component{
         super(props);
         this.state = {
             email: '',
-            password: ''
+            password: '',
+            inputEmailError: '',
+            errEmailMessage: '',
+            inputPassError: '',
+            errPassMessage: ''
         }
     }
 
@@ -23,8 +27,16 @@ export default class FromLogin extends React.Component{
                 'Content-Type': 'application/json'
             }
         }
-        const { data } = await api.post('login', dataForm, headers);
-        return data;
+        try{
+            const { data } = await api.post('login', dataForm, headers);
+            return data;
+        } catch (e) {
+            let res = {
+                status: e.response.status,
+                err: e.response.data
+            }
+            return res;
+        }
     }
 
     handleSubmit = async (event)=>{
@@ -35,6 +47,37 @@ export default class FromLogin extends React.Component{
             password: this.state.password
         }
         const response = await this.postLogin(dados);
+
+        console.log(response)
+
+        if(response.status === 400){
+
+            if(response.err.code === 1){
+                this.setState({
+                    inputEmailError: "inputErr",
+                    errEmailMessage: response.err.message,
+                })
+            }
+            
+            if(response.err.code === 3){
+                this.setState({
+                    inputPassError: "inputErr",
+                    errPassMessage: response.err.message,
+                })
+            }
+        }
+
+        if(response.error){
+
+            if(response.code === 2){
+                this.setState({
+                    inputEmailError: "inputErr",
+                    errEmailMessage: response.message
+                })
+            }
+
+        }
+
         login(response.token);
     }
 
@@ -54,14 +97,18 @@ export default class FromLogin extends React.Component{
                             type="email"
                             placeholder="Digite seu E-mail"
                             nameTarget={(e) => this.handleChange (e)}
+                            classErr={this.state.inputEmailError}
+                            errMessage={this.state.errEmailMessage}
                         />
                         <FormInput
-                             id="password"
-                             nameItem="password"
-                             label="Senha"
-                             type="password"
-                             placeholder="Digite sua Senha"
-                             nameTarget={(e) => this.handleChange (e)}
+                            id="password"
+                            nameItem="password"
+                            label="Senha"
+                            type="password"
+                            placeholder="Digite sua Senha"
+                            nameTarget={(e) => this.handleChange (e)}
+                            classErr={this.state.inputPassError}
+                            errMessage={this.state.errPassMessage}
                         />
                         <FormButton
                             classes="btn-blue"
