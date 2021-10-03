@@ -1,5 +1,6 @@
 import './style.css';
 import React from 'react';
+import { Link } from 'react-router-dom';
 
 export default class PerfilMenu extends React.Component{
 
@@ -23,9 +24,8 @@ export default class PerfilMenu extends React.Component{
                 </button>
                 {this.state.isMenuVisible && 
                     <div id="myDropdown" className="dropdown-content show">
-                        <a href="#home">Home</a>
-                        <a href="#about">About</a>
-                        <a href="#contact">Contact</a>
+                        <Link to="#home">Perfil</Link>
+                        <a href="/logout">Logout</a>
                     </div>
                 }
             </div>
