@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import './index.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
+import Logout from './pages/Logout';
 import AdminPage from './pages/AdminPage'
 import notFound from './pages/404';
 
@@ -11,6 +12,7 @@ ReactDOM.render(
   <Router>
     <Switch>
       <Route path="/" exact={true} component={Home} />
+      <Route path="/logout" exact={true} component={Logout} />
       <Route path="/login" component={Login} />
       <Route path="/admin/user" exact component={AdminPage} />
       <Route path="/admin/user/new" component={AdminPage} />

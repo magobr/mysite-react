@@ -1,22 +1,63 @@
 import React from 'react';
 
 import HeaderAdmin from '../components/HeaderAdmin';
-import CreateUser from '../components/form/CreateUser';
 import Table from '../components/Table';
+import api from '../services/api';
 
 export default class AdminPage extends React.Component{
-  
-  render(){
-    const { path } = this.props.match;
-    const mockData = {
-      tableHead: ["#", "Nome", "E-mail", "Status", "Action"],
-      tableBody: ["1", "João da Silva", "j.silva@teste.com", "Ativo", 'teste']
+
+  constructor(props) {
+    super(props);
+    this.state = {
+      valTable: null
     }
+  }
+
+  componentDidMount(){
+    const headers = {
+      headers: {
+      'Content-Type': 'application/json'
+      }
+    }
+    api.get('user', {}, headers)
+    .then(res =>{
+      let result = res.data.map(val => {
+        return{
+          _id: val._id,
+          name: `${val.frist_name} ${val.last_name}`,
+          email: val.email,
+        }
+      })
+      console.log(result)
+      this.setState({
+        valTable: result
+      });
+    })
+    .catch(e =>{
+      this.setState({
+        valTable: e.data
+      });
+    })
+  }
+
+  render(){
+    if(this.state.valTable === null){
+      return (
+        <> 
+          Loading
+        </>
+      )
+    }
+
+    let valTable = JSON.stringify(this.state.valTable)
+
     return (
       <>
         <HeaderAdmin />
-        {(path === "/admin/user/new") ? <CreateUser /> : ''}
-        {(path === "/admin/user") ? <Table tableHead={mockData.tableHead} tableBody={mockData.tableBody} /> : ''}
+        <Table
+          tableHead={["#", "Nome", "E-mail", "Action"]}
+          tableBody={valTable}
+        />
       </>
     );
   }

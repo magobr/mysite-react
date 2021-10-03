@@ -1,9 +1,12 @@
+
+import React from "react";
+import { Redirect } from "react-router";
+
 import FormButton from "../Button";
 import FormInput from "../Input";
-import React from "react";
 
 import api from "../../../services/api";
-import { login } from "../../../services/auth";
+import { login, isAuthenticated } from "../../../services/auth";
 
 import "./style.css";
 
@@ -17,7 +20,8 @@ export default class FromLogin extends React.Component{
             inputEmailError: '',
             errEmailMessage: '',
             inputPassError: '',
-            errPassMessage: ''
+            errPassMessage: '',
+            redirect: false
         }
     }
 
@@ -48,8 +52,6 @@ export default class FromLogin extends React.Component{
         }
         const response = await this.postLogin(dados);
 
-        console.log(response)
-
         if(response.status === 400){
 
             if(response.err.code === 1){
@@ -78,16 +80,33 @@ export default class FromLogin extends React.Component{
 
         }
 
-        login(response.token);
+        if (response.token) {
+            login(response.token);
+            this.setState({
+                redirect: true
+            })
+        }
+        
     }
 
     handleChange = (event) =>{
         this.setState({ [event.target.name]: event.target.value });
     }
 
+    componentDidMount() {
+        if (isAuthenticated()) {
+            this.setState({
+                redirect: true
+            })
+        }
+    }
+
     render(){
         return(
             <div className="container">
+
+                { this.state.redirect ? <Redirect to="/admin/user" /> : ''}
+
                 <div className="form">
                     <form onSubmit={(e) => this.handleSubmit(e)}>
                         <FormInput
