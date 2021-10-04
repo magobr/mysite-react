@@ -7,31 +7,31 @@ export default class Table extends React.Component {
         const { tableHead, tableBody } = this.props
         let tableBodyVal = JSON.parse(tableBody);
         return(
-            <div className="Table">
-                <div className="table-container">
-                    <div className="table-header">
-                        <div className="line-table">
+            <div className="bd-table">
+                <table className="table">
+                    <thead>
+                        <tr>
                             {tableHead.map((val)=>{
                                 return(
-                                    <div className="cel" key={val}>{val}</div>
+                                    <th key={val}>{val}</th>
                                 )
                             })}
-                        </div>
-                    </div>
+                        </tr>
+                    </thead>
 
-                    <div className="table-body">
+                    <tbody>
                         {tableBodyVal.map((val, i)=>{
                             return(
-                                <div className="line-table" key={i}>
-                                    <div className="cel" key={val._id}>{i+1}</div>
-                                    <div className="cel" key={val.name}>{val.name}</div>
-                                    <div className="cel" key={val.email}>{val.email}</div>
-                                    <div className="cel" key={i+1}>asdasd</div>
-                                </div>
+                                <tr key={i}>
+                                    <td key={val._id}>{i+1}</td>
+                                    <td key={val.name}>{val.name}</td>
+                                    <td key={val.email}>{val.email}</td>
+                                    <td key={i+1}>asdasd</td>
+                                </tr>
                             )
                         })}
-                    </div>
-                </div>
+                    </tbody>
+                </table>
             </div>
         )
     }
