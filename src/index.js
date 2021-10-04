@@ -1,23 +1,41 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './index.css';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import AdminPage from './pages/AdminPage'
 import notFound from './pages/404';
+import { isAuthenticated } from './services/auth'
+
+const auth = isAuthenticated();
+
+function PrivateRoute ({path, exact, component, auth}) {
+
+  if (auth) {
+    return (
+      <Route
+        path={path}
+        exact={exact}
+        component={component}
+      />
+    )
+  }
+  return(
+    <Redirect to="/login" />
+  )
+}
 
 ReactDOM.render(
   <Router>
-    <Switch>
-      <Route path="/" exact={true} component={Home} />
-      <Route path="/logout" exact={true} component={Logout} />
-      <Route path="/login" component={Login} />
-      <Route path="/admin/user" exact component={AdminPage} />
-      <Route path="/admin/user/new" component={AdminPage} />
-      <Route path="*" component={notFound} />
-    </Switch>
+      <Switch>
+        <Route path="/logout" exact={true} component={Logout} />
+        <Route path="/login" component={Login} />
+        <PrivateRoute path="/admin/user" exact={true} component={AdminPage} auth={auth} />
+        <PrivateRoute path="/admin/user/new" component={AdminPage} />
+        <Route path="*" component={notFound} />
+      </Switch>
   </Router>,
   document.getElementById('root')
 );
