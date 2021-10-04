@@ -28,7 +28,6 @@ export default class AdminPage extends React.Component{
           email: val.email,
         }
       })
-      console.log(result)
       this.setState({
         valTable: result
       });
