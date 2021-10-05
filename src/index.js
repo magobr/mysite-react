@@ -2,11 +2,14 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './index.css';
-import Home from './pages/Home';
+
+// import Home from './pages/Home';
 import Login from './pages/Login';
 import Logout from './pages/Logout';
 import AdminPage from './pages/AdminPage'
 import notFound from './pages/404';
+import AdminNewUser from './pages/AdminNewUser';
+
 import { isAuthenticated } from './services/auth'
 
 const auth = isAuthenticated();
@@ -31,9 +34,9 @@ ReactDOM.render(
   <Router>
       <Switch>
         <Route path="/logout" exact={true} component={Logout} />
-        <Route path="/login" component={Login} />
+        <Route path="/login" exact={true} component={Login} />
         <PrivateRoute path="/admin/user" exact={true} component={AdminPage} auth={auth} />
-        <PrivateRoute path="/admin/user/new" component={AdminPage} />
+        <PrivateRoute path="/admin/user/new" exact={true} component={AdminNewUser} auth={auth} />
         <Route path="*" component={notFound} />
       </Switch>
   </Router>,
