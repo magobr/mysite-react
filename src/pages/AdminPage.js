@@ -40,23 +40,20 @@ export default class AdminPage extends React.Component{
   }
 
   render(){
-    if(this.state.valTable === null){
-      return (
-        <> 
-          Loading
-        </>
-      )
-    }
-
     let valTable = JSON.stringify(this.state.valTable)
 
     return (
       <>
         <HeaderAdmin />
-        <Table
-          tableHead={["#", "Nome", "E-mail", "Action"]}
-          tableBody={valTable}
-        />
+
+        {this.state.valTable === null 
+          ? <>Loagind</> : 
+          <Table
+            tableTitle="Listagem de Usuários"
+            tableHead={["#", "Nome", "E-mail", "Action"]}
+            tableBody={valTable}
+          />
+        }
       </>
     );
   }

@@ -38,6 +38,10 @@ tr{
     border-color: #dee2e6;
 }
 
+.table-title {
+    margin: 40px 0 40px 0;
+}
+
 .table > :not(caption) > * > * {
     padding: .8rem .8rem;
     background-color: var(--bs-table-bg);

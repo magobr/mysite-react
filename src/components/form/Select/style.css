@@ -5,3 +5,13 @@
     margin: 5px 0 0 0;
     width: 250px;
 }
+
+/* Select Error */
+
+.input-item.inputErr .input-item_label{
+    color: #d63031;
+}
+.input-item.inputErr select{
+    border: solid 0.5px #d63031;
+    color: #ff7675;
+}

@@ -8,6 +8,9 @@ export default class Table extends React.Component {
         let tableBodyVal = JSON.parse(tableBody);
         return(
             <div className="bd-table">
+                <div className="table-title">
+                    <h1>{this.props.tableTitle}</h1>
+                </div>
                 <table className="table">
                     <thead>
                         <tr>

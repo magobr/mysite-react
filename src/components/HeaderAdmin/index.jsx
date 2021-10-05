@@ -1,5 +1,6 @@
 import React from 'react';
 import jwt from 'jwt-decode';
+import { Link } from 'react-router-dom';
 
 import { getToken } from '../../services/auth';
 import PerfilMenu from './PerfilMenu';
@@ -34,8 +35,6 @@ export default class HeaderAdmin extends React.Component {
 
         let user = jwt(getToken());
 
-        console.log()
-
         return(
             <div className="header">
                 <header>
@@ -51,8 +50,10 @@ export default class HeaderAdmin extends React.Component {
                         <PerfilMenu />
                         <div className="static-menu">
                             <ul>
+                                <li><Link to="/admin/user">Listar Usuários</Link></li>
+                                <li><Link to="/admin/user/new">Criar Usuŕaio</Link></li>
+                                <li><a href="/a">Listar Noticias</a></li>
                                 <li><a href="/a">Criar Noticias</a></li>
-                                <li><a href="/a">Minhas Noticias</a></li>
                             </ul>
                         </div>
                     </div>
