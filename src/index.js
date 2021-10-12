@@ -9,6 +9,7 @@ import Logout from './pages/Logout';
 import AdminPage from './pages/AdminPage'
 import notFound from './pages/404';
 import AdminNewUser from './pages/AdminNewUser';
+import AdminNewNews from './pages/AdminNewNews';
 
 import { isAuthenticated } from './services/auth'
 
@@ -37,6 +38,8 @@ ReactDOM.render(
         <Route path="/login" exact={true} component={Login} />
         <PrivateRoute path="/admin/user" exact={true} component={AdminPage} auth={auth} />
         <PrivateRoute path="/admin/user/new" exact={true} component={AdminNewUser} auth={auth} />
+        <PrivateRoute path="/admin/news" exact={true} component={AdminNewNews} auth={auth} />
+        <PrivateRoute path="/admin/news/new" exact={true} component={AdminNewNews} auth={auth} />
         <Route path="*" component={notFound} />
       </Switch>
   </Router>,

@@ -52,8 +52,8 @@ export default class HeaderAdmin extends React.Component {
                             <ul>
                                 <li><Link to="/admin/user">Listar Usuários</Link></li>
                                 <li><Link to="/admin/user/new">Criar Usuŕaio</Link></li>
-                                <li><a href="/a">Listar Noticias</a></li>
-                                <li><a href="/a">Criar Noticias</a></li>
+                                <li><Link to="/admin/news">Listar Noticias</Link></li>
+                                <li><Link to="/admin/news/new">Criar Noticias</Link></li>
                             </ul>
                         </div>
                     </div>

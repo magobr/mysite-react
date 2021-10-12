@@ -43,7 +43,7 @@ export default class AdminPage extends React.Component{
     let valTable = JSON.stringify(this.state.valTable)
 
     return (
-      <>
+      <div className="content-pages-admin">
         <HeaderAdmin />
 
         {this.state.valTable === null 
@@ -54,7 +54,7 @@ export default class AdminPage extends React.Component{
             tableBody={valTable}
           />
         }
-      </>
+      </div>
     );
   }
 } 
