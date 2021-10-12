@@ -24,11 +24,14 @@ export default class Table extends React.Component {
 
                     <tbody>
                         {tableBodyVal.map((val, i)=>{
+
+                            let vals = Object.values(val)
+
                             return(
                                 <tr key={i}>
-                                    <td key={val._id}>{i+1}</td>
-                                    <td key={val.name}>{val.name}</td>
-                                    <td key={val.email}>{val.email}</td>
+                                    <td>{i+1}</td>
+                                    <td>{vals[1]}</td>
+                                    <td>{vals[2]}</td>
                                     <td key={i+1}>asdasd</td>
                                 </tr>
                             )
