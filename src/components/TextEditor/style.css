@@ -1,0 +1,14 @@
+.ql-toolbar.ql-snow + .ql-container.ql-snow{
+    height: 340px;
+}
+
+/* Input error */
+.input-item.inputErr .input-item_label{
+    color: #d63031;
+}
+.input-item.inputErr input{
+    border: solid 0.5px #d63031;
+}
+.input-item.inputErr input::placeholder{
+    color: #ff7675;
+}

@@ -1,9 +1,9 @@
 import React from 'react';
 
 import HeaderAdmin from '../components/HeaderAdmin';
-import CreateUser from '../components/form/CreateUser';
 
-export default class AdminNewUser extends React.Component{
+import NewNews from '../components/NewNews';
+export default class AdminNewNews extends React.Component{
 
   constructor(props) {
     super(props);
@@ -19,7 +19,9 @@ export default class AdminNewUser extends React.Component{
     return (
       <div className="content-pages-admin">
         <HeaderAdmin />
-        <CreateUser />
+        <NewNews
+          titleEditor="Criar Notícia"
+        />
       </div>
     );
   }

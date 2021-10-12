@@ -29,10 +29,10 @@ export default class FormSelect extends React.Component {
                     name={this.props.nameItem}
                     onChange={this.props.nameTarget}
                 >
-                    <option>Selecione {this.props.nameSelecione}</option>
+                    <option value="">Selecione {this.props.nameSelecione}</option>
                     {Object.entries(propVal).map((val)=>{
                         return(
-                            <option key={val[1]} value={val[1]}>{val[0]}</option>
+                            <option key={val[0]} value={val[1]}>{val[1]}</option>
                         )
                     })}
                 </select>
