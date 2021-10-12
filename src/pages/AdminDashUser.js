@@ -4,7 +4,7 @@ import HeaderAdmin from '../components/HeaderAdmin';
 import Table from '../components/Table';
 import api from '../services/api';
 
-export default class AdminPage extends React.Component{
+export default class AdminDashUser extends React.Component{
 
   constructor(props) {
     super(props);

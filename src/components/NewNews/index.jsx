@@ -37,7 +37,6 @@ export default class NewNews extends React.Component {
 
     handleChange = (event) =>{
         this.setState({ [event.target.name]: event.target.value });
-        console.log(event.target.value);
     }
 
     postForm = async (dataForm) => {
@@ -118,7 +117,6 @@ export default class NewNews extends React.Component {
         }
 
         if(!dados.news.category.category_name){
-            console.log(dados.news.category.category_name)
             this.setState({
                 inputErrCategory: "inputErr",
                 errUserCategory: 'Selecione uma Categoría'
@@ -132,10 +130,8 @@ export default class NewNews extends React.Component {
             retorno = true 
         }
 
-        console.log(dados.news.category.category_name)
         if (retorno) {
             const response = await this.postForm(dados);
-            console.log(response);
             if (!response.error) {
                 this.setState({
                     redirect: true
@@ -152,7 +148,6 @@ export default class NewNews extends React.Component {
 
     handleChange = (event) =>{
         this.setState({ [event.target.name]: event.target.value });
-        console.log({ [event.target.name]: event.target.value })
     }
 
     componentDidMount(){
