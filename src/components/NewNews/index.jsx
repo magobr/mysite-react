@@ -178,7 +178,7 @@ export default class NewNews extends React.Component {
         val = JSON.stringify(val);
         return (
             <div className="content-page">
-                { this.state.redirect ? <Redirect to="/admin/news/new" /> : ''}
+                { this.state.redirect ? <Redirect to="/admin/news" /> : ''}
                 <div className="page-title">
                     <h1>{this.props.titleEditor}</h1>
                 </div>

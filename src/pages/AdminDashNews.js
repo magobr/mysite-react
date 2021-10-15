@@ -47,9 +47,9 @@ export default class AdminDashNews extends React.Component{
         <HeaderAdmin />
 
         {this.state.valTable === null 
-          ? <>Loagind</> : 
+          ? <>Loading</> : 
           <Table
-            tableTitle="Listagem de Usuários"
+            tableTitle="Listagem de Notícias"
             tableHead={["#", "Título", "Autor", "Action"]}
             tableBody={valTable}
           />

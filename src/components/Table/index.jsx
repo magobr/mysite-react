@@ -2,14 +2,13 @@ import React from 'react';
 
 import './style.css';
 export default class Table extends React.Component {
-    
     render(){
-        const { tableHead, tableBody } = this.props
+        const { tableHead, tableBody, tableTitle } = this.props
         let tableBodyVal = JSON.parse(tableBody);
         return(
             <div className="bd-table">
                 <div className="table-title">
-                    <h1>{this.props.tableTitle}</h1>
+                    <h1>{tableTitle}</h1>
                 </div>
                 <table className="table">
                     <thead>
@@ -32,7 +31,7 @@ export default class Table extends React.Component {
                                     <td>{i+1}</td>
                                     <td>{vals[1]}</td>
                                     <td>{vals[2]}</td>
-                                    <td key={i+1}>asdasd</td>
+                                    <td key={i+1}>Editar</td>
                                 </tr>
                             )
                         })}

@@ -82,9 +82,11 @@ export default class FromLogin extends React.Component{
 
         if (response.token) {
             login(response.token);
-            this.setState({
-                redirect: true
-            })
+            if (isAuthenticated()) {
+                this.setState({
+                    redirect: true
+                })
+            }
         }
         
     }
@@ -95,6 +97,7 @@ export default class FromLogin extends React.Component{
 
     componentDidMount() {
         if (isAuthenticated()) {
+            console.log(isAuthenticated())
             this.setState({
                 redirect: true
             })
