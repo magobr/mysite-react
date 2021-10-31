@@ -1,43 +1,35 @@
-import React from 'react';
-
+import React, { useState } from 'react';
 import './style.css';
-export default class FormInput extends React.Component {
-    
-    constructor(props) {
-        super(props);
-        this.state = {
-            valueInput: ''
-        }
-        // this.inputUpdated = this.inputUpdated.bind(this);
-    }
 
-    inputUpdated = (e) =>{
+function FormInput(props){
+    let [valueInput, setValueInput] = useState('');
+    
+    const inputUpdated = (e) =>{
         const { value } = e.target;
-        this.setState({ valueInput: value})
+        valueInput = value
     }
 
-    render(){
-        return(
-            <div className={"input-item " + this.props.classErr}>
-                <div className="input-item_label">
-                    <label htmlFor={this.props.id}>{this.props.label}</label>
-                    <div>
-                        <small>
-                            {this.props.errMessage}
-                        </small>
-                    </div>
+    return(
+        <div className={"input-item " +  props.classErr}>
+            <div className="input-item_label">
+                <label htmlFor={props.id}>{props.label}</label>
+                <div>
+                    <small>
+                        {props.errMessage}
+                    </small>
                 </div>
-                <input 
-                    type={this.props.type}
-                    id={this.props.id}
-                    name={this.props.nameItem}
-                    value={this.state.valueInput}
-                    onInput={(e) => this.inputUpdated(e)}
-                    placeholder={this.props.placeholder}
-                    onChange={this.props.nameTarget}
-                />
             </div>
-        )
-    }
-    
+            <input 
+                type={props.type}
+                id={props.id}
+                name={props.nameItem}
+                defaultValue={props.defaultValue || (() => setValueInput(valueInput)) }
+                onInput={inputUpdated}
+                placeholder={props.placeholder}
+                onChange={props.nameTarget}
+            />
+        </div>
+    )
 }
+    
+export default FormInput;

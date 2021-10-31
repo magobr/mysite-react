@@ -1,6 +1,5 @@
-
-import React from "react";
-import { Redirect } from "react-router";
+import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router";
 
 import FormButton from "../Button";
 import FormInput from "../Input";
@@ -10,22 +9,19 @@ import { login, isAuthenticated } from "../../../services/auth";
 
 import "./style.css";
 
-export default class FromLogin extends React.Component{
+function FromLogin(){
+    const history = useHistory();
+    const [valueInput, setValue] = useState({});
+    const [inputErrorEmail, setInputErrorEmail] = useState({class: '', message: ''});
+    const [inputErrorPass, setInputErrorPass] = useState({class: '', message: ''});
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            inputEmailError: '',
-            errEmailMessage: '',
-            inputPassError: '',
-            errPassMessage: '',
-            redirect: false
+    useEffect(()=>{
+        if (isAuthenticated()) {
+            history.push("/admin/user")
         }
-    }
+    },[history])
 
-    postLogin = async (dataForm) =>{
+    const postLogin = async (dataForm) =>{
         const headers = {
             headers: {
                 'Content-Type': 'application/json'
@@ -42,105 +38,77 @@ export default class FromLogin extends React.Component{
             return res;
         }
     }
+    
+    const handleChange = (event) =>{
+        const auxValues = {...valueInput}
+        auxValues[event.target.name] = event.target.value;
+        setValue(auxValues);
+    }
 
-    handleSubmit = async (event)=>{
+    const handleSubmit = async (event)=>{
         event.preventDefault();
+        const response = await postLogin(valueInput);
 
-        const dados = {
-            email: this.state.email,
-            password: this.state.password
-        }
-        const response = await this.postLogin(dados);
 
         if(response.status === 400){
-
             if(response.err.code === 1){
-                this.setState({
-                    inputEmailError: "inputErr",
-                    errEmailMessage: response.err.message,
-                })
+                setInputErrorEmail({class: "inputErr", message: response.err.message});
             }
             
             if(response.err.code === 3){
-                this.setState({
-                    inputPassError: "inputErr",
-                    errPassMessage: response.err.message,
-                })
+                setInputErrorPass({class: "inputErr", message: response.err.message})
             }
         }
 
         if(response.error){
-
             if(response.code === 2){
-                this.setState({
-                    inputEmailError: "inputErr",
-                    errEmailMessage: response.message
-                })
+                setInputErrorEmail({class: "inputErr", message: response.err.message});
             }
-
         }
 
         if (response.token) {
             login(response.token);
-            if (isAuthenticated()) {
-                this.setState({
-                    redirect: true
-                })
-            }
+            history.push("/admin/user");
         }
+    }
+
+    return(
         
-    }
+        <div className="container">
 
-    handleChange = (event) =>{
-        this.setState({ [event.target.name]: event.target.value });
-    }
-
-    componentDidMount() {
-        if (isAuthenticated()) {
-            console.log(isAuthenticated())
-            this.setState({
-                redirect: true
-            })
-        }
-    }
-
-    render(){
-        return(
-            <div className="container">
-
-                { this.state.redirect ? <Redirect to="/admin/user" /> : ''}
-
-                <div className="form">
-                    <form onSubmit={(e) => this.handleSubmit(e)}>
-                        <FormInput
-                            id="email"
-                            nameItem="email"
-                            label="E-mail"
-                            type="email"
-                            placeholder="Digite seu E-mail"
-                            nameTarget={(e) => this.handleChange (e)}
-                            classErr={this.state.inputEmailError}
-                            errMessage={this.state.errEmailMessage}
-                        />
-                        <FormInput
-                            id="password"
-                            nameItem="password"
-                            label="Senha"
-                            type="password"
-                            placeholder="Digite sua Senha"
-                            nameTarget={(e) => this.handleChange (e)}
-                            classErr={this.state.inputPassError}
-                            errMessage={this.state.errPassMessage}
-                        />
-                        <FormButton
-                            classes="btn-blue"
-                            name="btn-login"
-                            id="btn-login"
-                            labelName="Entrar"
-                        />
-                    </form>
-                </div>
-            </div>            
-        );
-    }
+            <div className="form">
+                <form onSubmit={handleSubmit}>
+                    <FormInput
+                        id="email"
+                        nameItem="email"
+                        label="E-mail"
+                        type="email"
+                        placeholder="Digite seu E-mail"
+                        defaultValue={valueInput.email}
+                        nameTarget={handleChange}
+                        classErr={inputErrorEmail.class}
+                        errMessage={inputErrorEmail.message}
+                    />
+                    <FormInput
+                        id="password"
+                        nameItem="password"
+                        label="Senha"
+                        type="password"
+                        placeholder="Digite sua Senha"
+                        defaultValue={valueInput.password}
+                        nameTarget={handleChange}
+                        classErr={inputErrorPass.class}
+                        errMessage={inputErrorPass.message}
+                    />
+                    <FormButton
+                        classes="btn-blue"
+                        name="btn-login"
+                        id="btn-login"
+                        labelName="Entrar"
+                    />
+                </form>
+            </div>
+        </div>            
+    );
 }
+export default FromLogin;

@@ -1,17 +1,19 @@
-import React from 'react';
-import { Redirect } from 'react-router';
+import { useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
 
-import { logout } from '../services/auth';
+import { isAuthenticated, logout } from '../services/auth';
 
-export default class Logout extends React.Component{
+function Logout(){
+    const history = useHistory()
 
-    componentDidMount() {
+    useEffect(()=>{
         logout()
-    }
+        if (!isAuthenticated()) {
+            history.push("/login")
+        }
+    })
+    
+    return <></>
+}
 
-    render(){
-        return (
-            <Redirect to="/login" />
-        )
-    }
-} 
+export default Logout;
