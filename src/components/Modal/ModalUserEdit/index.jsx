@@ -159,7 +159,7 @@ function ModalUserEdit(props) {
                     nameItem="user_type"
                     label="Tipo de Usuário"
                     nameSelecione="Um Tipo"
-                    userType={userType}
+                    listOption={userType}
                     defaultValue={userEditData.userType}
                     nameTarget={handleChange}
                     classErr={userTypeError.class}

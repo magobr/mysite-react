@@ -91,7 +91,6 @@ function AdminDashUser(props) {
   return (
     <div className="content-pages-admin">
       <HeaderAdmin />
-
       {valTable === null 
         ? <>Loagind</> : 
         <Table

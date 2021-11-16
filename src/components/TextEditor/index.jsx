@@ -5,18 +5,9 @@ import * as ReactQuill from "react-quill";
 import './style.css';
 import 'quill/dist/quill.snow.css'; 
 
-export default class TextEditor extends React.Component {
+function TextEditor(props){
 
-    constructor(props) {
-        super(props)
-        this.state = { text: '' }
-    }
-    
-    handleChange = (value) => {
-        this.setState({ text: value })
-    }
-
-    modules = {
+    let modules = {
         toolbar: [
             [{ 'header': [1, 2, 3, 4, 5, 6, false] }],
             ['bold', 'italic', 'underline', 'strike'],
@@ -24,22 +15,23 @@ export default class TextEditor extends React.Component {
             ['link'],
             ['clean'] 
         ],
-    }
+    };
     
-    render(){
-        return (
-            <>
-                <div>
-                    <small>
-                        {this.props.errMessage}
-                    </small>
-                </div>
-                <ReactQuill
-                    value={this.props.text}
-                    onChange={this.props.nameTarget}
-                    modules={this.modules}
-                />
-            </>
-        );
-    }
+
+    return (
+        <>
+            <div>
+                <small>
+                    {props.errMessage}
+                </small>
+            </div>
+            <ReactQuill
+                value={props.text}
+                onChange={props.nameTarget}
+                modules={modules}
+            />
+        </>
+    );
 }
+
+export default TextEditor;

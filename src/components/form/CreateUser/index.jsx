@@ -163,7 +163,7 @@ function CreateUser() {
                             nameItem="user_type"
                             label="Tipo de Usuário"
                             nameSelecione="Um Tipo"
-                            userType={listVal}
+                            listOption={listVal}
                             nameTarget={handleChange}
                             classErr={userTypeError.class}
                             errMessage={userTypeError.message}

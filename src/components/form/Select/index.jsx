@@ -3,7 +3,7 @@ import React from 'react';
 import './style.css';
 
 function FormSelect(props){
-    const propVal = JSON.parse(props.userType);
+    const propVal = JSON.parse(props.listOption);
     return(
         <div className={"input-item " + props.classErr}>
             <div className="input-item_label">
