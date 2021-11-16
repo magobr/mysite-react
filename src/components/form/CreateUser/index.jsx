@@ -1,5 +1,5 @@
-import React from "react";
-import { Redirect } from "react-router";
+import React, { useState, useEffect }from "react";
+import { useHistory } from "react-router";
 
 import api from "../../../services/api";
 
@@ -9,33 +9,30 @@ import FormSelect from "../Select";
 
 import "./style.css";
 
-export default class CreateUser extends React.Component{
+function CreateUser() {
+    const history = useHistory();
+    const [valueInput, setValue] = useState({});
+    const [errFristName, setErrFristName] = useState({class: '', message: ''});
+    const [errLastName, setErrLastName] = useState({class: '', message: ''});
+    const [emailError, setEmailError] = useState({class: '', message: ''});
+    const [passError, setPassError] = useState({class: '', message: ''});
+    const [userTypeError, setUserTypeError] = useState({class: '', message: ''});
+    const [listVal, setlistVal] = useState(null);
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            listVal: null,
-            frist_name: '',
-            last_name: '',
-            email: '',
-            password: '',
-            user_type: '',
-            user_status: '',
-            inputErrFristName: '',
-            errFristName: '',
-            inputErrLastName: '',
-            errLastName: '',
-            inputEmailError: '',
-            errEmailMessage: '',
-            inputPassError: '',
-            errPassMessage: '',
-            inputUserTypeError: '',
-            errUserTypeMessage: '',
-            redirect: false
+    useEffect(()=>{
+        async function fetchData() {
+            const headers = {
+                headers: {
+                'Content-Type': 'application/json'
+                }
+            }
+            const response = await api.get('/user/get/type', {}, headers);
+            setlistVal(JSON.stringify(response.data.UserType));
         }
-    }
+        fetchData()
+    },[])
 
-    postForm = async (dataForm) => {
+    const postForm = async (dataForm) => {
         const headers = {
             headers: {
                 'Content-Type': 'application/json'
@@ -53,174 +50,135 @@ export default class CreateUser extends React.Component{
         }
     }
 
-    handleSubmit = async (event)=>{
+    const handleSubmit = async (event)=>{
         event.preventDefault();
 
         const dados = { 
-            frist_name: this.state.frist_name,
-            last_name: this.state.last_name,
-            email: this.state.email,
-            password: this.state.password,
-            user_type: this.state.user_type,
+            frist_name: valueInput.frist_name,
+            last_name: valueInput.last_name,
+            email: valueInput.email,
+            password: valueInput.password,
+            user_type: valueInput.user_type,
             user_status: "ACTIVE"
         }
-        const response = await this.postForm(dados);
+
+        console.log(dados)
+        const response = await postForm(dados);
         console.log(response);
+
+        let retorno = true
 
         if(response.err){
 
             if(!dados.frist_name){
-                this.setState({
-                    inputErrFristName: "inputErr",
-                    errFristName: 'Preencha com o Primeiro Nome'
-                })    
-                return false            
+                setErrFristName({class: "inputErr", message: "Preencha com o Primeiro Nome"})  
+                retorno = false
             }
 
             if(!dados.last_name){
-                this.setState({
-                    inputErrLastName: "inputErr",
-                    errLastName: 'Preencha com o Último Nome'
-                })                
-            }
-
-            if(!dados.last_name){
-                this.setState({
-                    inputErrLastName: "inputErr",
-                    errLastName: 'Preencha com o Último Nome'
-                })                
+                setErrLastName({class: "inputErr", message: "Preencha com o Último Nome"})  
+                retorno = false               
             }
 
             if(!dados.email){
-                this.setState({
-                    inputEmailError: "inputErr",
-                    errEmailMessage: 'Preencha um E-Mail'
-                })                
+                setEmailError({class: "inputErr", message: "Preencha com um E-Mail"})
+                retorno = false
             }
 
             if(!dados.password){
-                this.setState({
-                    inputPassError: "inputErr",
-                    errPassMessage: 'Preencha com uma Senha'
-                })                
+                setPassError({class: "inputErr", message: "Preencha com uma Senha"})
+                retorno = false           
             }
 
             if(!dados.user_type){
-                this.setState({
-                    inputUserTypeError: "inputErr",
-                    errUserTypeMessage: 'Preencha com o Último Nome'
-                })                
+                setUserTypeError({class: "inputErr", message: "Preencha com uma Senha"})
+                retorno = false         
             }
         }
         
-        if (response.error === false) {
-            this.setState({
-                redirect: true
-            })
+        if (!retorno && response.error === false) {
+            history.push("/admin/user");
         }
        
     }   
 
-    handleChange = (event) =>{
-        this.setState({ [event.target.name]: event.target.value });
-    }
-
-    componentDidMount(){
-        const headers = {
-          headers: {
-          'Content-Type': 'application/json'
-          }
-        }
-        api.get('/user/get/type', {}, headers)
-        .then(res =>{
-          let result = res.data;
-          this.setState({
-            listVal: result
-          });
-        })
-        .catch(e =>{
-          this.setState({
-            listVal: e.data
-          });
-        })
+    const handleChange = (event) =>{
+        const auxValues = {...valueInput}
+        auxValues[event.target.name] = event.target.value;
+        setValue(auxValues);
     }
     
-
-    render(){
-        let val = ''
-        if (this.state.listVal) {
-            val = JSON.stringify(this.state.listVal.UserType);
-        }
-        
-        return(
-            <>
-            { this.state.redirect ? <Redirect to="/admin/user" /> : ''}
-            { this.state.listVal === null
-                ? <>Loading</> :
-                <div className="container">
-                    <div className="form">
-                        <form onSubmit={(e) => this.handleSubmit(e)}>
-                            <FormInput
-                                id="frist_name"
-                                nameItem="frist_name"
-                                label="Primeiro Nome"
-                                type="text"
-                                placeholder="Digite seu nome"
-                                nameTarget={(e) => this.handleChange (e)}
-                                classErr={this.state.inputErrFristName}
-                                errMessage={this.state.errFristName}
-                            />
-                            <FormInput
-                                id="last_name"
-                                nameItem="last_name"
-                                label="Último Nome"
-                                type="text"
-                                placeholder="Digite seu Sobrenome"
-                                nameTarget={(e) => this.handleChange (e)}
-                                classErr={this.state.inputErrLastName}
-                                errMessage={this.state.errLastName}
-                            />
-                            <FormInput
-                                id="email"
-                                nameItem="email"
-                                label="E-mail"
-                                type="email"
-                                placeholder="Digite seu E-mail"
-                                nameTarget={(e) => this.handleChange (e)}
-                                classErr={this.state.inputEmailError}
-                                errMessage={this.state.errEmailMessage}
-                            />
-                            <FormInput
-                                id="password"
-                                nameItem="password"
-                                label="Senha"
-                                type="password"
-                                placeholder="Digite sua Senha"
-                                nameTarget={(e) => this.handleChange (e)}
-                                classErr={this.state.inputEmailError}
-                                errMessage={this.state.errEmailMessage}
-                            />
-                            <FormSelect 
-                                id="user_type"
-                                nameItem="user_type"
-                                label="Tipo de Usuário"
-                                nameSelecione="Um Tipo"
-                                userType={val}
-                                nameTarget={(e) => this.handleChange (e)}
-                                classErr={this.state.inputUserTypeError}
-                                errMessage={this.state.errUserTypeMessage}
-                            />
-                            <FormButton
-                                classes="btn-green"
-                                name="btn-create-user"
-                                id="btn-create-user"
-                                labelName="Criar Usuário"
-                            />
-                        </form>
-                    </div>
+    return(
+        <>
+        {!listVal ? <>Loading</>:
+            <div className="container">
+                <div className="form">
+                    <form onSubmit={handleSubmit}>
+                        <FormInput
+                            id="frist_name"
+                            nameItem="frist_name"
+                            label="Primeiro Nome"
+                            type="text"
+                            placeholder="Digite seu nome"
+                            defaultValue={valueInput.frist_name}
+                            nameTarget={handleChange}
+                            classErr={errFristName.class}
+                            errMessage={errFristName.message}
+                        />
+                        <FormInput
+                            id="last_name"
+                            nameItem="last_name"
+                            label="Último Nome"
+                            type="text"
+                            placeholder="Digite seu Sobrenome"
+                            defaultValue={valueInput.last_name}
+                            nameTarget={handleChange}
+                            classErr={errLastName.class}
+                            errMessage={errLastName.message}
+                        />
+                        <FormInput
+                            id="email"
+                            nameItem="email"
+                            label="E-mail"
+                            type="email"
+                            placeholder="Digite seu E-mail"
+                            defaultValue={valueInput.email}
+                            nameTarget={handleChange}
+                            classErr={emailError.class}
+                            errMessage={emailError.message}
+                        />
+                        <FormInput
+                            id="password"
+                            nameItem="password"
+                            label="Senha"
+                            type="password"
+                            placeholder="Digite sua Senha"
+                            defaultValue={valueInput.password}
+                            nameTarget={handleChange}
+                            classErr={passError.class}
+                            errMessage={passError.message}
+                        />
+                        <FormSelect 
+                            id="user_type"
+                            nameItem="user_type"
+                            label="Tipo de Usuário"
+                            nameSelecione="Um Tipo"
+                            listOption={listVal}
+                            nameTarget={handleChange}
+                            classErr={userTypeError.class}
+                            errMessage={userTypeError.message}
+                        />
+                        <FormButton
+                            classes="btn-green"
+                            name="btn-create-user"
+                            id="btn-create-user"
+                            labelName="Criar Usuário"
+                        />
+                    </form>
                 </div>
+            </div>
             }
-            </>          
-        );
-    }
+        </>          
+    );
 }
+export default CreateUser;

@@ -1,19 +1,15 @@
-import React from 'react';
+import { tr } from 'date-fns/locale';
+import React, { useState, useEffect } from 'react';
 
 import HeaderAdmin from '../components/HeaderAdmin';
 import Table from '../components/Table';
 import api from '../services/api';
 
-export default class AdminDashNews extends React.Component{
+function AdminDashNews(props){
 
-  constructor(props) {
-    super(props);
-    this.state = {
-      valTable: null
-    }
-  }
+  const [valTable, setValTable] = useState([]);
 
-  componentDidMount(){
+  const newsData = ()=>{
     const headers = {
       headers: {
       'Content-Type': 'application/json'
@@ -21,40 +17,74 @@ export default class AdminDashNews extends React.Component{
     }
     api.get('news', {}, headers)
     .then(res =>{
-      let result = res.data.map(val => {
-        return{
-          _id: val._id,
-          news: val.news.headline,
-          author: `${val.author.frist_name} ${val.author.last_name}`,
-        }
-      })
-      this.setState({
-        valTable: result
-      });
+      let result = res.data;
+      setValTable(result);
     })
     .catch(e =>{
-      this.setState({
-        valTable: e.data
-      });
+      setValTable(e.data);
     })
   }
 
-  render(){
-    let valTable = JSON.stringify(this.state.valTable)
+  useEffect(()=>{
+    newsData()
+  },[]);
 
-    return (
-      <div className="content-pages-admin">
-        <HeaderAdmin />
-
-        {this.state.valTable === null 
-          ? <>Loading</> : 
-          <Table
-            tableTitle="Listagem de Notícias"
-            tableHead={["#", "Título", "Autor", "Action"]}
-            tableBody={valTable}
-          />
-        }
-      </div>
-    );
+  const deleteNews = async (id) => {
+    const headers = {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    }
+    try{
+      const { data } = await api.delete(`news/${id}`, headers);
+      return data;
+    } catch (e) {
+      return e;
+    }
   }
+
+  const handleDelete = async (id) =>{
+    const response = await deleteNews(id);
+    newsData()
+    console.log(response) 
+  }
+
+  const contentTable = () =>{
+    let contentMap = valTable.map((val, i)=>{
+      return(
+        <tr key={i}>
+          <td>{i+1}</td>
+          <td>{val.news.headline}</td>
+          <td>{val.author.frist_name + " " + val.author.last_name}</td>
+          <td key={i+1} width="5%">
+            <span className="trash-outline" onClick={()=>handleDelete(val._id) } >
+              <ion-icon name="trash-outline" />
+            </span>
+          </td>
+        </tr>
+      )
+    });
+
+    return contentMap;
+  }
+
+  const contentTableVal = contentTable();
+  
+  return (
+    <div className="content-pages-admin">
+      <HeaderAdmin />
+
+      {valTable === null 
+        ? <>Loading</> : 
+        <Table
+          tableTitle="Listagem de Notícias"
+          tableHead={["#", "Título", "Autor", "Action"]}
+          contentTable={contentTableVal}
+        />
+      }
+    </div>
+  );
+  
 } 
+
+export default AdminDashNews;

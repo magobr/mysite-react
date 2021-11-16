@@ -19,3 +19,14 @@
 .input-item.inputErr input::placeholder{
     color: #ff7675;
 }
+
+/* Input error */
+.input-item.inputWarning .input-item_label{
+    color: #fdcb6e;
+}
+.input-item.inputWarning input{
+    border: solid 0.5px #fdcb6e;
+}
+.input-item.inputWarning input::placeholder{
+    color: #ffeaa7;
+}

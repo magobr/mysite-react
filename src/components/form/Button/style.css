@@ -23,3 +23,13 @@
     background-color:#00b894;
     transition: 0.5s;
 }
+
+.btn-red{
+    background-color: #d63031;
+    border: solid 0.5px #ff7675;
+    color: #ffffff;
+}
+.btn-red:hover{
+    background-color:#ff7675;
+    transition: 0.5s;
+}

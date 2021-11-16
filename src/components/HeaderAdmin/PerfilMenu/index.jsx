@@ -1,28 +1,22 @@
-import './style.css';
-import React from 'react';
+import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
-export default class PerfilMenu extends React.Component{
+import './style.css';
+   
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isMenuVisible: false,
+    function PerfilMenu(){
+        const [ isMenuVisible, setMenuVisible ] = useState(false)
+
+        const onClickMenu = () => {
+            setMenuVisible(!isMenuVisible);
         }
-        this.onClickMenu = this.onClickMenu.bind(this)
-    }
-    
-    onClickMenu(){
-        this.setState({isMenuVisible: !this.state.isMenuVisible});
-    }
 
-    render(){
         return(
             <div className="dropdown">
-                <button onClick={this.onClickMenu} className="dropbtn">
+                <button onClick={onClickMenu} className="dropbtn">
                     <ion-icon name="chevron-down-outline" className="dropbtn"></ion-icon>
                 </button>
-                {this.state.isMenuVisible && 
+                {isMenuVisible && 
                     <div id="myDropdown" className="dropdown-content show">
                         <Link to="#home">Perfil</Link>
                         <a href="/logout">Logout</a>
@@ -31,4 +25,4 @@ export default class PerfilMenu extends React.Component{
             </div>
         )
     }
-}
+export default PerfilMenu;

@@ -209,7 +209,7 @@ export default class NewNews extends React.Component {
                             nameItem="category"
                             label="Categoria"
                             nameSelecione="Uma Categoria"
-                            userType={val}
+                            listOption={val}
                             nameTarget={(e) => this.handleChange (e)}
                             classErr={this.state.inputErrCategory}
                             errMessage={this.state.errUserCategory}
