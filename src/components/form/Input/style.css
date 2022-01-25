@@ -1,0 +1,32 @@
+.input-item{
+    margin: 20px 0 20px 0 ;
+}
+.input-item input{
+    border: solid 0.5px #c8cdce;
+    border-radius: 5px;
+    padding: 10px;
+    margin: 5px 0 0 0;
+    width: 100%;
+}
+
+/* Input error */
+.input-item.inputErr .input-item_label{
+    color: #d63031;
+}
+.input-item.inputErr input{
+    border: solid 0.5px #d63031;
+}
+.input-item.inputErr input::placeholder{
+    color: #ff7675;
+}
+
+/* Input error */
+.input-item.inputWarning .input-item_label{
+    color: #fdcb6e;
+}
+.input-item.inputWarning input{
+    border: solid 0.5px #fdcb6e;
+}
+.input-item.inputWarning input::placeholder{
+    color: #ffeaa7;
+}

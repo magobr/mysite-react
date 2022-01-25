@@ -1,0 +1,51 @@
+/* Notify */
+
+.notify-container {
+    width: 100vw;
+    position: fixed;
+    top: 0px;
+    left: 0px;
+    z-index: 0;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.notify-success{
+    margin: 70px 10px 0 0;
+    padding: 5px;
+    background: #04AA6D;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.notify-error{
+    margin: 70px 10px 0 0;
+    padding: 5px;
+    background: #d63031;
+    color: #ffffff;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.nofity-content{
+    display: flex;
+    justify-content: space-between;
+}
+
+.nofity-message{
+    margin: 10px;
+}
+
+.notify-close{
+    top: 0;
+    right: 0;
+    border: none;
+    background: none;
+    color: #ffffff;
+    font-size: 1.0em;
+    font-weight: bolder;
+    cursor: pointer;
+    padding: 0;
+}

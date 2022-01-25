@@ -1,12 +1,49 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import './index.css';
-import App from './App';
+
+// import Home from './pages/Home';
+import Login from './pages/Login';
+import Logout from './pages/Logout';
+import AdminDashUser from './pages/AdminDashUser'
+import AdminDashNews from './pages/AdminDashNews'
+import notFound from './pages/404';
+import AdminNewUser from './pages/AdminNewUser';
+import AdminNewNews from './pages/AdminNewNews';
+
+import { isAuthenticated } from './services/auth'
+
+const auth = isAuthenticated();
+
+function PrivateRoute ({path, exact, component, auth}) {
+
+  if (auth) {
+    return (
+      <Route
+        path={path}
+        exact={exact}
+        component={component}
+      />
+    )
+  }
+  return(
+    <Redirect to="/login" />
+  )
+}
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Router>
+      <Switch>
+        <Route path="/logout" exact={true} component={Logout} />
+        <Route path="/login" exact={true} component={Login} />
+        <PrivateRoute path="/admin/user" exact={true} component={AdminDashUser} auth={auth} />
+        <PrivateRoute path="/admin/user/new" exact={true} component={AdminNewUser} auth={auth} />
+        <PrivateRoute path="/admin/news" exact={true} component={AdminDashNews} auth={auth} />
+        <PrivateRoute path="/admin/news/new" exact={true} component={AdminNewNews} auth={auth} />
+        <Route path="*" component={notFound} />
+      </Switch>
+  </Router>,
   document.getElementById('root')
 );
 
